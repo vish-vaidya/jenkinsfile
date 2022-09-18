@@ -11,12 +11,38 @@ node {
 
 stages {
 
-	stage ('GIT'){
+	stage ('copy index'){
 	
 		steps {
-				sh "sudo yum install git -y"
-        sh "git init"
-        sh "git remote add origin https://github.com/vish-vaidya/jenkinsfile.git"
+				sh "cp -r index.html /var/www/html/"
+		}
+	
+	}
+
+
+	stage ('copy dev'){
+	
+		steps {
+				sh "cp -r dev.html /var/www/html/"
+		}
+	
+	}
+
+	stage ('copy QA'){
+	
+		steps {
+				sh "cp -r qa.html /var/www/html/"
+		}
+	
+	}
+
+
+	stage ('installing'){
+	
+		steps {
+			sh "yum install httpd -y"
+                        sh "service httpd start"
+                        sh "chkconfig httpd on"
 		}
 	
 	}
